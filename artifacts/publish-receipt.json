@@ -1,0 +1,9 @@
+{
+  "room_id": "!pulse_desk:switch.local",
+  "linked_lab_id": "!pulse_lab:switch.local",
+  "approved_by_human": "@tejas:switch.local",
+  "approval_event_id": "$msg_0004",
+  "media_count": 2,
+  "schedules_count": 1,
+  "sha256_receipt": "dbf3de29f73134cc0163648058ef315eb93505403cbeaa610ddd3daee467155a"
+}

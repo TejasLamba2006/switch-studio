@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Switch Studio · Multi-Room Production Dashboard</title>
+  <style>
+    body { background:#0d0d0d; color:#f0efec; font-family:system-ui,-apple-system,sans-serif; margin:0; padding:32px; line-height:1.5; }
+    h1, h2 { margin-top:0; }
+    .meta { color:#c3c2b7; font-family:monospace; font-size:13px; margin-bottom:24px; }
+    .card { background:#1a1a19; border:1px solid #2c2c2a; border-radius:10px; padding:20px; margin-bottom:24px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { text-align:left; padding:10px 12px; border-bottom:1px solid #2c2c2a; vertical-align:top; }
+    th { color:#898781; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; }
+    code { background:#262624; padding:2px 6px; border-radius:4px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <h1>Switch Studio · Multi-Room Production &amp; Fact-Checked Publishing House</h1>
+  <div class="meta">Rooms: !pulse_desk:switch.local ↔ !pulse_lab:switch.local · Receipt SHA-256: dbf3de29f73134cc0163648058ef315eb93505403cbeaa610ddd3daee467155a</div>
+
+  <div class="card">
+    <h2>1. Rendered Storyboard Attachment (<code>storyboard.svg</code>)</h2>
+    <img src="storyboard.svg" alt="Rendered Storyboard" style="max-width:100%;border-radius:8px;border:1px solid #2c2c2a"/>
+  </div>
+
+  <div class="card">
+    <h2>2. Single-Writer Room Documents in <code>#pulse-studio-desk</code></h2>
+    <table>
+      <thead><tr><th>Document</th><th>Single-Writer Owner</th><th>Description</th></tr></thead>
+      <tbody><tr><td><code>creative-brief</code></td><td><code>@tejas:switch.local</code> (human)</td><td>Human-authored production brief, style rules, and hard constraints.</td></tr><tr><td><code>storyboard-and-script</code></td><td><code>agt_pulse_showrunner</code> (agent)</td><td>3-scene technical storyboard and narration script with structured telemetry claims.</td></tr><tr><td><code>citation-ledger</code></td><td><code>agt_pulse_fact_checker</code> (agent)</td><td>Verified telemetry citations for all 10 numeric claims across Scenes 1-3.</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>3. Room Transcript (<code>#pulse-studio-desk</code>, 5 events; linked <code>#pulse-fact-and-render-lab</code>, 0 events)</h2>
+    <table>
+      <thead><tr><th>Event ID</th><th>Opaque Sender ID</th><th>Message Body</th></tr></thead>
+      <tbody><tr><td><code>$msg_0001</code></td><td><code>agt_pulse_showrunner</code></td><td>@pulse-fact-checker Drafted `storyboard-and-script` (doc_8599dcdbc6) from `creative-brief`. Ready for lab fact check.</td></tr><tr><td><code>$msg_0002</code></td><td><code>agt_pulse_fact_checker</code></td><td>@pulse-cut-room-bot All 10 numeric claims verified against primary telemetry in `citation-ledger` (doc_0212533725). Cleared for render.</td></tr><tr><td><code>$msg_0003</code></td><td><code>agt_pulse_cut_room_bot</code></td><td>[attachment: storyboard.svg, narration.wav] Rendered 3-scene storyboard.svg and narration.wav under exclusive @on-air-director lease. Awaiting human producer `Approved. Publish it.`</td></tr><tr><td><code>$msg_0004</code></td><td><code>@tejas:switch.local</code></td><td>@pulse-cut-room-bot Approved. Publish it.</td></tr><tr><td><code>$msg_0005</code></td><td><code>agt_pulse_cut_room_bot</code></td><td>Published episode bundle. Human approval verified (@tejas:switch.local on $msg_0004). Receipt SHA-256: `dbf3de29f73134cc`.</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>4. Switch-Centrality Proof (<code>--prove-switch-central</code>)</h2>
+    <table>
+      <thead><tr><th>Switch Governance Boundary</th><th>Adversarial / Bypass Attempt</th><th>Protocol Response</th><th>Outcome</th></tr></thead>
+      <tbody><tr><td><strong>1. Single-Writer Room Document Guard</strong></td><td>Showrunner calls update_room_document on human-owned `creative-brief`</td><td><code>HTTP 403 (single_writer_violation)</code></td><td style='color:#199e70;font-weight:600'>BLOCKED (Only the creator (@tejas:switch.local) may update document &#x27;creative-brief&#x27;; caller is agt_pulse_showrunner.)</td></tr><tr><td><strong>2. Exclusive Role Lease Lock (`on-air-director`)</strong></td><td>Showrunner calls assume_role(&#x27;on-air-director&#x27;) while Cut Room Bot holds the lease</td><td><code>HTTP 409 (exclusive_role_occupied)</code></td><td style='color:#199e70;font-weight:600'>BLOCKED (Exclusive role &#x27;on-air-director&#x27; in !pulse_desk:switch.local is already leased by agt_pulse_cut_room_bot.)</td></tr><tr><td><strong>3. Participant Identity Verification (`list_participants`)</strong></td><td>Agent posts &#x27;Approved. Publish it.&#x27; without human producer sign-off</td><td><code>HTTP 403 (human_approval_required)</code></td><td style='color:#199e70;font-weight:600'>BLOCKED (No verified human participant has posted &#x27;Approved. Publish it.&#x27; in the studio desk room.)</td></tr><tr><td><strong>4. Cross-Room Link Graph &amp; Bus Enforcement</strong></td><td>Fact Checker calls read_context(room_id=desk) after room link is severed</td><td><code>HTTP 403 (cross_room_denied)</code></td><td style='color:#199e70;font-weight:600'>BLOCKED (Cannot cross-read !spoofcheck_desk:switch.local from !spoofcheck_lab:switch.local: rooms are not linked or caller is not a member.)</td></tr></tbody>
+    </table>
+  </div>
+</body>
+</html>

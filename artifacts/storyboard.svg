@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0d0d0d"/>
+  <text x="40" y="58" fill="#f0efec" font-family="system-ui, sans-serif" font-size="26" font-weight="700">Switch Studio · Verified Production Storyboard</text>
+  <text x="40" y="92" fill="#898781" font-family="monospace" font-size="14">Room: #pulse-studio-desk ↔ #pulse-fact-and-render-lab · Role Lease: on-air-director (exclusive) · 10/10 Claims Verified</text>
+  
+  <rect x="40" y="140" width="360" height="390" rx="10" fill="#1a1a19" stroke="#3987e5" stroke-width="2"/>
+  <rect x="40" y="140" width="360" height="6" rx="3" fill="#3987e5"/>
+  <text x="64" y="182" fill="#3987e5" font-family="monospace" font-size="13" font-weight="700">SCENE 01 · 00:00 - 00:30</text>
+  <text x="64" y="216" fill="#f0efec" font-family="system-ui, sans-serif" font-size="18" font-weight="700">The 211,672-Token Silent Tax</text>
+  <text x="64" y="254" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">Before typing a single character on a custom gat</text>
+  <text x="64" y="274" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">eway, 388 MCP tools and 454 skills inject 211,67</text>
+  <line x1="64" y1="302" x2="376" y2="302" stroke="#2c2c2a" stroke-width="1"/>
+  <text x="64" y="340" fill="#c3c2b7" font-family="monospace" font-size="13">stock_turn1_tokens: <tspan fill="#f0efec" font-weight="700">211,672</tspan></text><text x="64" y="374" fill="#c3c2b7" font-family="monospace" font-size="13">mcp_schema_tokens_before: <tspan fill="#f0efec" font-weight="700">160,400</tspan></text><text x="64" y="408" fill="#c3c2b7" font-family="monospace" font-size="13">skill_catalog_tokens_before: <tspan fill="#f0efec" font-weight="700">30,822</tspan></text>
+  <rect x="64" y="476" width="168" height="28" rx="4" fill="#16281e" stroke="#199e70" stroke-width="1"/>
+  <text x="78" y="495" fill="#199e70" font-family="monospace" font-size="12" font-weight="700">✓ CITATION VERIFIED</text>
+
+  <rect x="420" y="140" width="360" height="390" rx="10" fill="#1a1a19" stroke="#d95926" stroke-width="2"/>
+  <rect x="420" y="140" width="360" height="6" rx="3" fill="#d95926"/>
+  <text x="444" y="182" fill="#d95926" font-family="monospace" font-size="13" font-weight="700">SCENE 02 · 00:30 - 01:00</text>
+  <text x="444" y="216" fill="#f0efec" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Unpacking 2,394 Embedded Bun Modul</text>
+  <text x="444" y="254" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">Inside the PE binary sit 2,394 JavaScript module</text>
+  <text x="444" y="274" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">s and JSC bytecode pointers that must be zeroed </text>
+  <line x1="444" y1="302" x2="756" y2="302" stroke="#2c2c2a" stroke-width="1"/>
+  <text x="444" y="340" fill="#c3c2b7" font-family="monospace" font-size="13">bun_modules_count: <tspan fill="#f0efec" font-weight="700">2,394</tspan></text><text x="444" y="374" fill="#c3c2b7" font-family="monospace" font-size="13">subagent_spawn_tokens_before: <tspan fill="#f0efec" font-weight="700">191,222</tspan></text><text x="444" y="408" fill="#c3c2b7" font-family="monospace" font-size="13">subagent_spawn_tokens_after: <tspan fill="#f0efec" font-weight="700">1,530</tspan></text>
+  <rect x="444" y="476" width="168" height="28" rx="4" fill="#16281e" stroke="#199e70" stroke-width="1"/>
+  <text x="458" y="495" fill="#199e70" font-family="monospace" font-size="12" font-weight="700">✓ CITATION VERIFIED</text>
+
+  <rect x="800" y="140" width="360" height="390" rx="10" fill="#1a1a19" stroke="#199e70" stroke-width="2"/>
+  <rect x="800" y="140" width="360" height="6" rx="3" fill="#199e70"/>
+  <text x="824" y="182" fill="#199e70" font-family="monospace" font-size="13" font-weight="700">SCENE 03 · 01:00 - 01:30</text>
+  <text x="824" y="216" fill="#f0efec" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Live Result: 22,433 Tokens (-89%)</text>
+  <text x="824" y="254" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">With universal ToolSearch and in-place SkillSear</text>
+  <text x="824" y="274" fill="#c3c2b7" font-family="system-ui, sans-serif" font-size="13">ch active, Turn 1 drops to 22,433 tokens and sub</text>
+  <line x1="824" y1="302" x2="1136" y2="302" stroke="#2c2c2a" stroke-width="1"/>
+  <text x="824" y="340" fill="#c3c2b7" font-family="monospace" font-size="13">patched_turn1_tokens: <tspan fill="#f0efec" font-weight="700">22,433</tspan></text><text x="824" y="374" fill="#c3c2b7" font-family="monospace" font-size="13">reduction_percent: <tspan fill="#f0efec" font-weight="700">89</tspan></text><text x="824" y="408" fill="#c3c2b7" font-family="monospace" font-size="13">mcp_schema_tokens_after: <tspan fill="#f0efec" font-weight="700">1,530</tspan></text><text x="824" y="442" fill="#c3c2b7" font-family="monospace" font-size="13">skill_catalog_tokens_after: <tspan fill="#f0efec" font-weight="700">453</tspan></text>
+  <rect x="824" y="476" width="168" height="28" rx="4" fill="#16281e" stroke="#199e70" stroke-width="1"/>
+  <text x="838" y="495" fill="#199e70" font-family="monospace" font-size="12" font-weight="700">✓ CITATION VERIFIED</text>
+
+  <text x="40" y="585" fill="#898781" font-family="monospace" font-size="13">Single-Writer Guard: creative-brief (@tejas:switch.local) · Storyboard (@pulse-showrunner) · Ledger (@pulse-fact-checker)</text>
+</svg>

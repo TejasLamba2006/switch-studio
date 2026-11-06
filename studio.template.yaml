@@ -1,0 +1,176 @@
+# Switch Studio: Multi-Room Creative Production & Fact-Checked Publishing House
+#
+# Written in version 2 of the Switch template language: every resource has a
+# key and a type (agent, room, group), resources refer to each other by key,
+# and room-scoped documents/roles enforce single-writer briefs and exclusive
+# director leases.
+version: 2
+
+params:
+  studio_name:
+    type: string
+    label: Studio prefix
+    description: Short lowercase prefix for the studio rooms and agents.
+    default: pulse
+    pattern: "[a-z][a-z0-9-]*"
+  episode_topic:
+    type: string
+    label: Episode topic
+    description: What this production cycle is investigating and rendering.
+    default: "Why 211k Turn-1 Context Bloat Happens and How Binary Patching Cuts It 89%"
+  bridge:
+    type: bridge
+    label: Messaging app
+    description: Where the studio rooms are mirrored (Mattermost, Slack, Discord, or Webhook).
+    default: [$first]
+    required: false
+  provider:
+    type: provider
+    description: The coding agent backing the room teammates.
+    default: [claude, codex, opencode]
+    input: advanced
+  machine:
+    type: machine
+    description: The machine the agents run on.
+    default: [$first]
+    input: advanced
+  directory:
+    type: directory
+    description: Working directory for each studio agent.
+    default: "{$agents_dir}/{showrunner.name}"
+    input: advanced
+
+form:
+  advanced: { label: Advanced, open: false }
+
+resources:
+  showrunner:
+    type: agent
+    name: "{studio_name}-showrunner"
+    display_name: "{studio_name} Showrunner"
+    description: Drafts the 3-scene storyboard and narration script from the human creative brief.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{directory}"
+    addressing:
+      anyone_in: [desk]
+    instructions: |
+      You are the showrunner in #{desk.name}.
+      1. Connect to #{desk.name} and load the human-authored `creative-brief` room
+         document via `load_internal_documents`. Never attempt to overwrite
+         `creative-brief` (Switch enforces single-writer ownership).
+      2. Create or update your own room-scoped document `storyboard-and-script`
+         with a 3-scene technical script and exact numeric claims.
+      3. Hand the draft off to @{fact_checker.name} to verify every claim
+         before any render can begin.
+
+  fact_checker:
+    type: agent
+    name: "{studio_name}-fact-checker"
+    display_name: "{studio_name} Fact Checker"
+    description: Cross-reads the studio desk from the lab, verifies every numeric claim, and writes the citation ledger.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{directory}"
+    addressing: owner-agents
+    instructions: |
+      You sit in both #{desk.name} and #{lab.name}.
+      1. Connect to #{lab.name} and assume the `fact-verifier` role (`assume_role`).
+      2. Cross-read #{desk.name} from #{lab.name} using `read_context(room_id=...)`
+         without hopping rooms, and load `creative-brief` + `storyboard-and-script`.
+      3. Check every number and claim against the benchmark dataset. Write the
+         verified evidence into the `citation-ledger` room document and post
+         clearance to @{cut_room_bot.name}.
+
+  cut_room_bot:
+    type: agent
+    name: "{studio_name}-cut-room-bot"
+    display_name: "{studio_name} Cut Room Bot"
+    description: Custom Switch Agent Protocol daemon that holds the exclusive on-air-director lease, renders SVG/WAV/HTML cuts, uploads room media, and waits for verified human sign-off.
+    provider: "{provider}"
+    machine: "{machine}"
+    directory: "{directory}"
+    addressing: owner-agents
+    instructions: |
+      You are the render and publishing daemon in #{desk.name} and #{lab.name}.
+      1. Wait until @{fact_checker.name} posts a verified `citation-ledger`.
+      2. Connect to #{desk.name} and acquire the exclusive `on-air-director`
+         role (`assume_role`). Only one session may hold this lease at a time.
+      3. Render the 3-scene visual storyboard (`storyboard.svg`), synthesized
+         audio narration track (`narration.wav`), and studio cut preview, then
+         upload them to #{desk.name} via the Switch room media endpoint.
+      4. Schedule the post-publish metrics check via `create_schedule`.
+      5. Wait for a message in #{desk.name} containing `Approved. Publish it.`
+         Verify the sender's opaque transport ID via `list_participants` and
+         confirm `type == "human"` before finalizing the release receipt and
+         releasing `on-air-director`.
+
+  studio_group:
+    type: group
+    name: "{studio_name} production group"
+    description: Linked creative desk and fact/render lab for {studio_name}
+    links:
+      - from: desk
+        to: lab
+        label: verification-and-render
+
+  desk:
+    type: room
+    group: studio_group
+    name: "{studio_name}-studio-desk"
+    description: Main creative room where the human producer, showrunner, fact-checker, and cut-room director collaborate.
+    channel_type: channel_public
+    bridge: "{bridge}"
+    agents: [showrunner, fact_checker, cut_room_bot]
+    users:
+      - if: "{bridge}"
+        value: ["{$creator}"]
+      - value: []
+    roles:
+      - name: on-air-director
+        exclusive: true
+        instructions: Exclusive render and release lock. Hold while rendering and awaiting human publish sign-off; release immediately after publishing.
+      - name: fact-verifier
+        exclusive: false
+        instructions: Shared verification hat for auditing claims in the storyboard against primary data.
+    docs:
+      - name: creative-brief
+        description: Human-authored production brief, style rules, and hard constraints.
+        instructions: Read before drafting or rendering. Authored by the human producer; agents cannot modify this document.
+        content: |
+          EPISODE TOPIC: {episode_topic}
+          TARGET DURATION: 90 seconds (3 scenes x 30s)
+          HARD CONSTRAINTS:
+          1. Every numeric benchmark must match measured primary telemetry in the lab dataset.
+          2. Zero unverified superlatives or AI filler words.
+          3. Cut Room Bot must attach both the rendered SVG storyboard and WAV audio preview to the room before asking {$creator} for final sign-off.
+    instructions: |
+      This room produces "{episode_topic}".
+      - `creative-brief` is owned by {$creator} (single-writer human doc).
+      - @{showrunner.name} writes `storyboard-and-script`.
+      - @{fact_checker.name} verifies claims in #{lab.name} and publishes `citation-ledger`.
+      - @{cut_room_bot.name} assumes the exclusive `on-air-director` role, uploads rendered media, and waits for {$creator} to say `Approved. Publish it.`
+    kickoff: |
+      @{showrunner.name} @{fact_checker.name} @{cut_room_bot.name} — kicking off production for "{episode_topic}".
+      @{showrunner.name}: load `creative-brief`, write `storyboard-and-script`, and hand off to @{fact_checker.name}.
+
+  lab:
+    type: room
+    group: studio_group
+    name: "{studio_name}-fact-and-render-lab"
+    description: Linked verification and render telemetry room for fact-checking and asset compilation.
+    channel_type: channel_private
+    bridge: "{bridge}"
+    agents: [fact_checker, cut_room_bot]
+    users:
+      - if: "{bridge}"
+        value: ["{$creator}"]
+      - value: []
+    roles:
+      - name: fact-verifier
+        exclusive: false
+        instructions: Audit every number in storyboard-and-script against measured lab data before clearing cut-room-bot.
+    instructions: |
+      Linked verification lab for #{desk.name}. Cross-read #{desk.name} via `read_context(room_id=...)`, write `citation-ledger`, and hand verified specs to @{cut_room_bot.name}.
+    kickoff: |
+      @{fact_checker.name} @{cut_room_bot.name} — lab is linked to #{desk.name}. Stand by for storyboard handoff.
